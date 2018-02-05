@@ -209,6 +209,7 @@ function refreshContextElements(selectedIndexIn) {
         dataType: 'json',
         type: 'GET',
         success: function (data) {
+          console.log('versions', data);
           var versions = data;
 
           // Walk-through these and see if we have a match of microversions
