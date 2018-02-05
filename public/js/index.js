@@ -50,6 +50,7 @@ function checkForChange(resolve, reject, elementId) {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
+      console.log('modelchange', data);
       var objects = data;
       if (objects.change == true && Parts.length > 0) {
         // Show the message to say the BOM may be invalid
@@ -151,6 +152,7 @@ function checkSubscription() {
       dataType: 'json',
       type: 'GET',
       success: function(data) {
+        console.log("accounts", data);
         var object = data;
 
         Subscribed = object.Subscribed;
@@ -190,6 +192,7 @@ function refreshContextElements(selectedIndexIn) {
     dataType: 'json',
     type: 'GET',
     success: function (data) {
+      console.log("workspace", data);
       var work = data;
       ReadOnly = false;
       theContext.microversion = 0;
@@ -227,6 +230,7 @@ function refreshContextElements(selectedIndexIn) {
             dataType: 'json',
             type: 'GET',
             success: function(data) {
+              console.log("assemblies", data);
               // for each assembly tab, create a select option to make that
               // assembly the current context
               $("#elt-select").empty();
@@ -262,6 +266,7 @@ function refreshContextElements(selectedIndexIn) {
                   dataType: 'json',
                   type: 'GET',
                   success: function(data) {
+                    console.log('webhooks', data);
                   }
                 });
               }
@@ -317,6 +322,7 @@ function findDefinition(resolve, reject) {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
+      console.log('definition', data);
       var compData = data;
 
       // Save information here
@@ -420,6 +426,7 @@ function onGenerate() {
       dataType: 'json',
       type: 'GET',
       success: function(data) {
+        console.log('boundingBox', data);
         var res = data;
         var xLow = res.lowX;
         var xHigh = res.highX;
@@ -528,6 +535,7 @@ function onGenerate2() {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
+      console.log('shadedView', data);
       var res = data;
       if (res.images.length > 0) {
         var image = res.images[0];

@@ -465,7 +465,7 @@ var getVersions = function(req, res) {
   });
 };
 
-var getVersion = function(req, res) {
+var getVersions = function(req, res) {
   var url = apiUrl + '/api/documents/d/' + req.query.documentId + '/versions';
 
   request.get({
