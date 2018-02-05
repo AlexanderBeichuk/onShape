@@ -238,7 +238,7 @@ function refreshContextElements(selectedIndexIn) {
                     .append(
                     "<option value='" + objects[i].id + "'" +
                     (i == selectedIndexIn ? " selected" : "") + ">" +
-                    _.escape(objects[i].name) +  "</option>"
+                    _.escape(objects[i].name) + "(" + objects[i].revision + ")" + "</option>"
                 )
                     .change(function () {
                       id = $("#elt-select option:selected").val();
