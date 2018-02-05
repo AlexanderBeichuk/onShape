@@ -465,30 +465,6 @@ var getVersions = function(req, res) {
   });
 };
 
-var getVersions = function(req, res) {
-  var url = apiUrl + '/api/documents/d/' + req.query.documentId + '/versions';
-
-  request.get({
-    uri: url,
-    headers: {
-      'Authorization': 'Bearer ' + req.user.accessToken
-    }
-  }).then(function(data) {
-    res.send(data);
-  }).catch(function(data) {
-    console.log('****** getVersions - CATCH ' + data.statusCode);
-    if (data.statusCode === 401) {
-      authentication.refreshOAuthToken(req, res).then(function() {
-        getElementList(req, res);
-      }).catch(function(err) {
-        console.log('Error refreshing token or getting versions: ', err);
-      });
-    } else {
-      console.log('GET /api/documents/versions error: ', data);
-    }
-  });
-};
-
 router.get('/documents', getDocuments);
 router.get('/session', getSession);
 router.get('/elements', getElementList);
@@ -505,6 +481,5 @@ router.get('/modelchange', checkModelChange);
 router.get('/accounts', getAccounts);
 router.get('/workspace', getWorkspace);
 router.get('/versions', getVersions);
-router.get('/version', getVersion);
 
 module.exports = router;
