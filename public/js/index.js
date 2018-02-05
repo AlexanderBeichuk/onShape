@@ -472,6 +472,7 @@ function findStudioMetadata(resolve, reject, partStudio) {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
+      console.log('metadata', data);
       var metaParts = data;
 
       for (var x = 0; x < metaParts.length; ++x) {
