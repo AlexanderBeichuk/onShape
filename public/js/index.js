@@ -248,6 +248,7 @@ function refreshContextElements(selectedIndexIn) {
                   type: 'GET',
                   success: function(data) {
                     console.log('getElementsMetadata', data);
+                    objects[i].revision = data.revision;
                   },
                   error: function(data) {
                     console.log('error', data);
