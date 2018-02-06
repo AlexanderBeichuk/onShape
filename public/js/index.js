@@ -246,14 +246,15 @@ function refreshContextElements(selectedIndexIn) {
                   dataType: 'json',
                   type: 'GET',
                   success: function(data) {
-                    objects[i].revision = data.revision;
+                    var object = data;
+                    //objects[i].revision = data.revision;
 
 
                     $("#elt-select")
                       .append(
-                      "<option value='" + objects[i].id + "'" +
+                      "<option value='" + object.elementId + "'" +
                       (i == selectedIndexIn ? " selected" : "") + ">" +
-                      _.escape(objects[i].name) + " (" + objects[i].revision + ")" + "</option>"
+                      _.escape(object.name) + " (" + objects.revision + ")" + "</option>"
                     )
                       .change(function () {
                         id = $("#elt-select option:selected").val();
