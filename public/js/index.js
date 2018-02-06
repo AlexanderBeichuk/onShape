@@ -239,7 +239,25 @@ function refreshContextElements(selectedIndexIn) {
               var id;
 
               for (var i = 0; i < objects.length; ++i) {
-                console.log(objects);
+
+
+
+                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
+                $.ajax('/api/getElementsMetadata' + params, {
+                  dataType: 'json',
+                  type: 'GET',
+                  success: function(data) {
+                    console.log('getElementsMetadata', data);
+                  }
+                });
+
+
+
+
+
+
+
+
                 $("#elt-select")
                     .append(
                     "<option value='" + objects[i].id + "'" +
