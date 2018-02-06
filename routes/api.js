@@ -505,6 +505,6 @@ router.get('/modelchange', checkModelChange);
 router.get('/accounts', getAccounts);
 router.get('/workspace', getWorkspace);
 router.get('/versions', getVersions);
-router.get('/getElementsMetadata', getElementsMetadata);
+router.get('/getelementsmetadata', getElementsMetadata);
 
 module.exports = router;

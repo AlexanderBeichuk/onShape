@@ -243,11 +243,14 @@ function refreshContextElements(selectedIndexIn) {
 
 
                 var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
-                $.ajax('/api/getElementsMetadata' + params, {
+                $.ajax('/api/getelementsmetadata' + params, {
                   dataType: 'json',
                   type: 'GET',
                   success: function(data) {
                     console.log('getElementsMetadata', data);
+                  },
+                  error: function(data) {
+                    console.log('error', data);
                   }
                 });
 
