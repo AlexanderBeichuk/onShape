@@ -240,15 +240,12 @@ function refreshContextElements(selectedIndexIn) {
 
               for (var i = 0; i < objects.length; ++i) {
 
-
                 var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
                 $.ajax('/api/getelementsmetadata' + params, {
                   dataType: 'json',
                   type: 'GET',
                   success: function(data) {
                     var object = data;
-                    //objects[i].revision = data.revision;
-
 
                     $("#elt-select")
                       .append(
@@ -269,44 +266,11 @@ function refreshContextElements(selectedIndexIn) {
                         $('#image-results').empty();
                         $('#bom-results').empty();
                       });
-
-
-
-
                   },
                   error: function(data) {
                     console.log("Error with getMetaData ", data);
                   }
                 });
-
-
-
-
-
-
-                //
-                //var metaData = getMetaData(objects[i]) || '';
-                //objects[i].revision = metaData.revision;
-
-                //$("#elt-select")
-                //    .append(
-                //    "<option value='" + objects[i].id + "'" +
-                //    (i == selectedIndexIn ? " selected" : "") + ">" +
-                //    _.escape(objects[i].name) + " (" + objects[i].revision + ")" + "</option>"
-                //)
-                //    .change(function () {
-                //      id = $("#elt-select option:selected").val();
-                //      theContext.elementId = id;
-                //
-                //      // Restore the UI back to initial create
-                //      uiDisplay('off', 'on');
-                //
-                //      var b = document.getElementById("element-generate");
-                //      b.style.display = "initial";
-                //      b.firstChild.data = "Create";
-                //      $('#image-results').empty();
-                //      $('#bom-results').empty();
-                //    });
 
                 // Setup the webhook for model changes
                 var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
@@ -361,22 +325,6 @@ function refreshContextElements(selectedIndexIn) {
     }
   });
 }
-
-//get Meta Data for part
-//function getMetaData(object) {
-//  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + object.id;
-//  $.ajax('/api/getelementsmetadata' + params, {
-//    dataType: 'json',
-//    type: 'GET',
-//    success: function(data) {
-//      return data;
-//    },
-//    error: function(data) {
-//      console.log("Error with getMetaData ", data);
-//    }
-//  });
-//}
-
 //
 // Get the definition of the selected assembly
 //
