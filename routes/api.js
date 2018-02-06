@@ -466,7 +466,7 @@ var getVersions = function(req, res) {
 };
 
 var getElementsMetadata = function(req, res) {
-  var url = apiUrl + '/api/elements/d/' + req.query.documentId + '/w' + req.query.workspaceId + '/e' + req.query.elementId + '/metadata?';
+  var url = apiUrl + '/api/elements/d/' + req.query.documentId + '/w/' + req.query.workspaceId + '/e/' + req.query.elementId + '/metadata?';
 
   request.get({
     uri: url,
