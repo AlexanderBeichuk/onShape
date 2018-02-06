@@ -241,7 +241,7 @@ function refreshContextElements(selectedIndexIn) {
               for (var i = 0; i < objects.length; ++i) {
 
 
-                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + object.id;
+                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
                 $.ajax('/api/getelementsmetadata' + params, {
                   dataType: 'json',
                   type: 'GET',
