@@ -476,15 +476,15 @@ var getElementsMetadata = function(req, res) {
   }).then(function(data) {
     res.send(data);
   }).catch(function(data) {
-    console.log('****** getVersions - CATCH ' + data.statusCode);
+    console.log('****** getElementsMetadata - CATCH ' + data.statusCode);
     if (data.statusCode === 401) {
       authentication.refreshOAuthToken(req, res).then(function() {
-        getElementList(req, res);
+        getElementsMetadata(req, res);
       }).catch(function(err) {
         console.log('Error refreshing token or getting versions: ', err);
       });
     } else {
-      console.log('GET /api/documents/versions error: ', data);
+      console.log('GET /api/elements/d/ error: ', data);
     }
   });
 };

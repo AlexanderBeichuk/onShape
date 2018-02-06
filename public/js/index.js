@@ -240,27 +240,8 @@ function refreshContextElements(selectedIndexIn) {
 
               for (var i = 0; i < objects.length; ++i) {
 
-
-
-                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
-                $.ajax('/api/getelementsmetadata' + params, {
-                  dataType: 'json',
-                  type: 'GET',
-                  success: function(data) {
-                    console.log('getElementsMetadata', data);
-                    objects[i].revision = data.revision;
-                  },
-                  error: function(data) {
-                    console.log('error', data);
-                  }
-                });
-
-
-
-
-
-
-
+                var metaData = getMetaData(objects[i]) || '';
+                objects[i].revision = metaData.revision;
 
                 $("#elt-select")
                     .append(
@@ -332,6 +313,21 @@ function refreshContextElements(selectedIndexIn) {
         console.log("Third party cookie issue ...");
         displayAlert('Cookies for third party sites need to be enabled for this app to run<br>    If you are using Safari, use <b>Preferences</b> -> <b>Privacy</b> then click on <b>Always allow</b><br>    Refresh this page and the BOM Sample will work properly.');
       }
+    }
+  });
+}
+
+//get Meta Data for part
+function getMetaData(object) {
+  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + object.id;
+  $.ajax('/api/getelementsmetadata' + params, {
+    dataType: 'json',
+    type: 'GET',
+    success: function(data) {
+      return data;
+    },
+    error: function(data) {
+      console.log("Error with getMetaData ", data);
     }
   });
 }
