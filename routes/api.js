@@ -490,7 +490,7 @@ var getElementsMetaData = function(req, res) {
 };
 
 var getVersionMetaData = function(req, res) {
-  var url = apiUrl + '/api/elements/d/' + req.query.documentId + '/v/' + req.query.versionId;
+  var url = 'https://cad.onshape.com/api/metadata/d/9cb33be6696f47c651f82c68/w/e90942c482421ca800bf5f89?depth=5&detailLevel=5&noNull=false&thumbnail=false&e-offset=0';
 
   request.get({
     uri: url,

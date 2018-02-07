@@ -186,6 +186,26 @@ var SubAsmIds = [];
 // Update the list of elements in the context object
 //
 function refreshContextElements(selectedIndexIn) {
+
+
+
+
+  $.ajax('/getversionmetadata', {
+    dataType: 'json',
+    type: 'GET',
+    success: function (data) {
+      console.log("metatatat", data);
+    }
+  });
+
+
+
+
+
+
+
+
+
   // First, get all of the workspaces ...
   var params = "?documentId=" + theContext.documentId;
   $.ajax('/api/workspace' + params, {
