@@ -325,6 +325,7 @@ function refreshContextElements(selectedIndexIn) {
     }
   });
 }
+
 //
 // Get the definition of the selected assembly
 //
