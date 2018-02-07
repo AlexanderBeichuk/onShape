@@ -182,6 +182,21 @@ var AsmSubAssemblies = [];
 var Parts = [];
 var SubAsmIds = [];
 
+
+// request for metaData of version
+function getVersionMetaData (version) {
+  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + version.id;
+  $.ajax('/api/getelementsmetadata' + params, {
+    dataType: 'json',
+    type: 'GET',
+    success: function (data) {
+      console.log('metadata version', data);
+    }
+  });
+}
+
+
+
 //
 // Update the list of elements in the context object
 //
@@ -216,6 +231,7 @@ function refreshContextElements(selectedIndexIn) {
 
           // Walk-through these and see if we have a match of microversions
           for (var i = 0; i < versions.length; ++i) {
+            getVersionMetaData(versions[i]);
             if (versions[i].microversion == theContext.microversion) {
               theContext.version = versions[i].id;
               break;
@@ -230,8 +246,8 @@ function refreshContextElements(selectedIndexIn) {
             type: 'GET',
             success: function(data) {
               console.log("assemblies", data);
-              // for each assembly tab, create a select option to make that
-              // assembly the current context
+               //for each assembly tab, create a select option to make that
+               //assembly the current context
               $("#elt-select").empty();
 
               var objects = data;
@@ -324,6 +340,7 @@ function refreshContextElements(selectedIndexIn) {
     }
   });
 }
+
 //
 // Get the definition of the selected assembly
 //
