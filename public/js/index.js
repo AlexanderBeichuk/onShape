@@ -185,8 +185,8 @@ var SubAsmIds = [];
 
 // request for metaData of version
 function getVersionMetaData (version) {
-  var params = "?documentId=" + theContext.documentId + "&versionId=" + version.id;
-  $.ajax('/api/getversionmetadata' + params, {
+  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + version.id;
+  $.ajax('/api/getelementsmetadata' + params, {
     dataType: 'json',
     type: 'GET',
     success: function (data) {
