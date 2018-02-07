@@ -223,85 +223,6 @@ function refreshContextElements(selectedIndexIn) {
             }
           }
 
-
-
-
-
-          var objects = data;
-          var id;
-
-          for (var i = 0; i < objects.length; ++i) {
-
-            var params = "?documentId=" + theContext.documentId + "&versionId=" + objects[i].microversion  + "&elementId=" + objects[i].id;
-            $.ajax('/api/getelementsmetadata' + params, {
-              dataType: 'json',
-              type: 'GET',
-              success: function(data) {
-                var object = data;
-                console.log(data);
-                $("#elt-select")
-                  .append(
-                  "<option value='" + object.elementId + "'" +
-                  (i == selectedIndexIn ? " selected" : "") + ">" +
-                  _.escape(object.name) + " (" + object.revision + ")" + "</option>"
-                )
-                  .change(function () {
-                    id = $("#elt-select option:selected").val();
-                    theContext.elementId = id;
-
-                    // Restore the UI back to initial create
-                    uiDisplay('off', 'on');
-
-                    var b = document.getElementById("element-generate");
-                    b.style.display = "initial";
-                    b.firstChild.data = "Create";
-                    $('#image-results').empty();
-                    $('#bom-results').empty();
-                  });
-              },
-              error: function(data) {
-                console.log("Error with getMetaData ", data);
-              }
-            });
-
-            // Setup the webhook for model changes
-            var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
-            $.ajax('/api/webhooks' + params, {
-              dataType: 'json',
-              type: 'GET',
-              success: function(data) {
-                console.log('webhooks', data);
-              }
-            });
-          }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           var dfd = $.Deferred();
           // Get all elements for the document ... only send D/W
           var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId;
@@ -314,53 +235,53 @@ function refreshContextElements(selectedIndexIn) {
               // assembly the current context
               $("#elt-select").empty();
 
-              //var objects = data;
-              //var id;
-              //
-              ////for (var i = 0; i < objects.length; ++i) {
-              ////
-              ////  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
-              ////  $.ajax('/api/getelementsmetadata' + params, {
-              ////    dataType: 'json',
-              ////    type: 'GET',
-              ////    success: function(data) {
-              ////      var object = data;
-              ////
-              ////      $("#elt-select")
-              ////        .append(
-              ////        "<option value='" + object.elementId + "'" +
-              ////        (i == selectedIndexIn ? " selected" : "") + ">" +
-              ////        _.escape(object.name) + " (" + object.revision + ")" + "</option>"
-              ////      )
-              ////        .change(function () {
-              ////          id = $("#elt-select option:selected").val();
-              ////          theContext.elementId = id;
-              ////
-              ////          // Restore the UI back to initial create
-              ////          uiDisplay('off', 'on');
-              ////
-              ////          var b = document.getElementById("element-generate");
-              ////          b.style.display = "initial";
-              ////          b.firstChild.data = "Create";
-              ////          $('#image-results').empty();
-              ////          $('#bom-results').empty();
-              ////        });
-              ////    },
-              ////    error: function(data) {
-              ////      console.log("Error with getMetaData ", data);
-              ////    }
-              ////  });
-              ////
-              ////  // Setup the webhook for model changes
-              ////  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
-              ////  $.ajax('/api/webhooks' + params, {
-              ////    dataType: 'json',
-              ////    type: 'GET',
-              ////    success: function(data) {
-              ////      console.log('webhooks', data);
-              ////    }
-              ////  });
-              ////}
+              var objects = data;
+              var id;
+
+              for (var i = 0; i < objects.length; ++i) {
+
+                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
+                $.ajax('/api/getelementsmetadata' + params, {
+                  dataType: 'json',
+                  type: 'GET',
+                  success: function(data) {
+                    var object = data;
+
+                    $("#elt-select")
+                      .append(
+                      "<option value='" + object.elementId + "'" +
+                      (i == selectedIndexIn ? " selected" : "") + ">" +
+                      _.escape(object.name) + " (" + object.revision + ")" + "</option>"
+                    )
+                      .change(function () {
+                        id = $("#elt-select option:selected").val();
+                        theContext.elementId = id;
+
+                        // Restore the UI back to initial create
+                        uiDisplay('off', 'on');
+
+                        var b = document.getElementById("element-generate");
+                        b.style.display = "initial";
+                        b.firstChild.data = "Create";
+                        $('#image-results').empty();
+                        $('#bom-results').empty();
+                      });
+                  },
+                  error: function(data) {
+                    console.log("Error with getMetaData ", data);
+                  }
+                });
+
+                // Setup the webhook for model changes
+                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
+                $.ajax('/api/webhooks' + params, {
+                  dataType: 'json',
+                  type: 'GET',
+                  success: function(data) {
+                    console.log('webhooks', data);
+                  }
+                });
+              }
               theContext.elementId = $("#elt-select option:selected").val();
 
               // If it's empty, then put up a message in the drop-list
