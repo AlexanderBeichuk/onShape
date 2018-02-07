@@ -206,7 +206,6 @@ function refreshContextElements(selectedIndexIn) {
           break;
         }
       }
-
       // Next, get all of the versions and cross-compare microversions to figure out the Version (we need that for Metadata retrieval)
       $.ajax('/api/versions' + params, {
         dataType: 'json',
