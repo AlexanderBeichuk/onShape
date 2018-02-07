@@ -182,21 +182,6 @@ var AsmSubAssemblies = [];
 var Parts = [];
 var SubAsmIds = [];
 
-
-// request for metaData of version
-function getVersionMetaData (version) {
-  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + version.id;
-  $.ajax('/api/getelementsmetadata' + params, {
-    dataType: 'json',
-    type: 'GET',
-    success: function (data) {
-      console.log('metadata version', data);
-    }
-  });
-}
-
-
-
 //
 // Update the list of elements in the context object
 //
@@ -221,6 +206,7 @@ function refreshContextElements(selectedIndexIn) {
           break;
         }
       }
+
       // Next, get all of the versions and cross-compare microversions to figure out the Version (we need that for Metadata retrieval)
       $.ajax('/api/versions' + params, {
         dataType: 'json',
@@ -231,7 +217,6 @@ function refreshContextElements(selectedIndexIn) {
 
           // Walk-through these and see if we have a match of microversions
           for (var i = 0; i < versions.length; ++i) {
-            getVersionMetaData(versions[i]);
             if (versions[i].microversion == theContext.microversion) {
               theContext.version = versions[i].id;
               break;
@@ -246,8 +231,8 @@ function refreshContextElements(selectedIndexIn) {
             type: 'GET',
             success: function(data) {
               console.log("assemblies", data);
-               //for each assembly tab, create a select option to make that
-               //assembly the current context
+              // for each assembly tab, create a select option to make that
+              // assembly the current context
               $("#elt-select").empty();
 
               var objects = data;
@@ -340,7 +325,6 @@ function refreshContextElements(selectedIndexIn) {
     }
   });
 }
-
 //
 // Get the definition of the selected assembly
 //
@@ -491,16 +475,16 @@ function findStudioMetadata(resolve, reject, partStudio) {
   var uri = '';
   if (partStudio.externalDocumentId) {
     uri = '/api/externalstudiometadata' +
-    "?documentId=" + partStudio.externalDocumentId +
-    "&versionId=" + partStudio.externalDocumentVersion +
-    "&elementId=" + partStudio.elementId +
-    "&linkDocumentId=" + theContext.documentId
+      "?documentId=" + partStudio.externalDocumentId +
+      "&versionId=" + partStudio.externalDocumentVersion +
+      "&elementId=" + partStudio.elementId +
+      "&linkDocumentId=" + theContext.documentId
   } else {
     uri = '/api/studiometadata'+
-    "?documentId=" + theContext.documentId +
-    "&workspaceId=" + theContext.workspaceId +
-    "&elementId=" + partStudio.elementId +
-    "&microversionId=" + theContext.microversion
+      "?documentId=" + theContext.documentId +
+      "&workspaceId=" + theContext.workspaceId +
+      "&elementId=" + partStudio.elementId +
+      "&microversionId=" + theContext.microversion
   }
   $.ajax(uri, {
     dataType: 'json',
@@ -553,10 +537,10 @@ function onGenerate2() {
   var outputSize = 600;
 
   var options = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + theContext.elementId +
-      "&outputHeight=" + outputSize + "&outputWidth=" + outputSize + "&pixelSize=" + realSize / outputSize +
-      "&viewMatrix1=" + 0.707 + "&viewMatrix2=" + 0.707 + "&viewMatrix3=" + 0 + "&viewMatrix4=" + (-tX) +
-      "&viewMatrix5=" + (-0.409) + "&viewMatrix6=" + 0.409 + "&viewMatrix7=" + 0.816 + "&viewMatrix8=" + (-tY) +
-      "&viewMatrix9=" + 0.577 + "&viewMatrix10=" + (-0.577) + "&viewMatrix11=" + 0.577 + "&viewMatrix12=" + (-tZ);
+    "&outputHeight=" + outputSize + "&outputWidth=" + outputSize + "&pixelSize=" + realSize / outputSize +
+    "&viewMatrix1=" + 0.707 + "&viewMatrix2=" + 0.707 + "&viewMatrix3=" + 0 + "&viewMatrix4=" + (-tX) +
+    "&viewMatrix5=" + (-0.409) + "&viewMatrix6=" + 0.409 + "&viewMatrix7=" + 0.816 + "&viewMatrix8=" + (-tY) +
+    "&viewMatrix9=" + 0.577 + "&viewMatrix10=" + (-0.577) + "&viewMatrix11=" + 0.577 + "&viewMatrix12=" + (-tZ);
 
   $.ajax('/api/shadedView'+ options, {
     dataType: 'json',
@@ -576,7 +560,7 @@ function onGenerate2() {
       // Create block dom
       this.block = $('<div class="bom-table-block"></div>');
       this.block.attr("bom", "bom")
-     // this.block.append(ResultImage);
+      // this.block.append(ResultImage);
       ResultTable = $('<table class="table-striped"></table>');
       ResultTable.addClass('resultTable');
       this.block.append(ResultTable);
@@ -836,8 +820,8 @@ function onGenerate3() {
         continue;
 
       ResultTable.append("<tr>" + "<td align='center'>" + (currentSubItemNumber + 1) + "</td>" + "<td style='padding-left: 20px'>" + Parts[i].name + "</td>" +
-      "<td align='center'>" + Parts[i].count + "</td>" + "<td style='padding-left: 20px'>" + Parts[i].partnumber + "</td>" +
-      "<td style='padding-left: 20px'>" + Parts[i].revision + "</td>" + "</tr>");
+        "<td align='center'>" + Parts[i].count + "</td>" + "<td style='padding-left: 20px'>" + Parts[i].partnumber + "</td>" +
+        "<td style='padding-left: 20px'>" + Parts[i].revision + "</td>" + "</tr>");
       currentSubItemNumber++;
     }
 
@@ -861,10 +845,10 @@ function onSave() {
     if (Parts[i].isUsed == true) {
 
       myCsv += (currentItemNumber + 1) + "," +
-      Parts[i].name + "," +
-      Parts[i].count + "," +
-      Parts[i].partnumber + "," +
-      Parts[i].revision + "\n";
+        Parts[i].name + "," +
+        Parts[i].count + "," +
+        Parts[i].partnumber + "," +
+        Parts[i].revision + "\n";
       currentItemNumber++;
     }
   }
