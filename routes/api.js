@@ -489,30 +489,6 @@ var getElementsMetaData = function(req, res) {
   });
 };
 
-var getVersionMetaData = function(req, res) {
-  var url = 'https://cad.onshape.com/api/metadata/d/9cb33be6696f47c651f82c68/w/e90942c482421ca800bf5f89?depth=5&detailLevel=5&noNull=false&thumbnail=false&e-offset=0';
-
-  request.get({
-    uri: url,
-    headers: {
-      'Authorization': 'Bearer ' + req.user.accessToken
-    }
-  }).then(function(data) {
-    res.send(data);
-  }).catch(function(data) {
-    console.log('****** getElementsMetadata - CATCH ' + data.statusCode);
-    if (data.statusCode === 401) {
-      authentication.refreshOAuthToken(req, res).then(function() {
-        getElementsMetaData(req, res);
-      }).catch(function(err) {
-        console.log('Error refreshing token or getting versions: ', err);
-      });
-    } else {
-      console.log('GET /api/elements/d/ error: ', data);
-    }
-  });
-};
-
 router.get('/documents', getDocuments);
 router.get('/session', getSession);
 router.get('/elements', getElementList);
@@ -530,6 +506,5 @@ router.get('/accounts', getAccounts);
 router.get('/workspace', getWorkspace);
 router.get('/versions', getVersions);
 router.get('/getelementsmetadata', getElementsMetaData);
-router.get('/getversionmetadata', getVersionMetaData);
 
 module.exports = router;

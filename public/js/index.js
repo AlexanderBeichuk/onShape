@@ -186,26 +186,6 @@ var SubAsmIds = [];
 // Update the list of elements in the context object
 //
 function refreshContextElements(selectedIndexIn) {
-
-
-
-
-  $.ajax('/getversionmetadata', {
-    dataType: 'json',
-    type: 'GET',
-    success: function (data) {
-      console.log("metatatat", data);
-    }
-  });
-
-
-
-
-
-
-
-
-
   // First, get all of the workspaces ...
   var params = "?documentId=" + theContext.documentId;
   $.ajax('/api/workspace' + params, {
@@ -439,8 +419,8 @@ function onGenerate() {
       , shadow: false // Whether to render a shadow
       , hwaccel: false // Whether to use hardware acceleration
       , position: 'relative' // Element positioning
-    }
-    var target = document.getElementById('bom-status-bar')
+    };
+    var target = document.getElementById('bom-status-bar');
 //  var spinner = new Spinner(opts).spin(target);
 
     // Clear any old data
