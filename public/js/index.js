@@ -182,6 +182,21 @@ var AsmSubAssemblies = [];
 var Parts = [];
 var SubAsmIds = [];
 
+
+// request for metaData of version
+function getVersionMetaData (version) {
+  var params = "?documentId=" + theContext.documentId + "&versionId=" + version.id;
+  $.ajax('/api/getversionmetadata' + params, {
+    dataType: 'json',
+    type: 'GET',
+    success: function (data) {
+      console.log('metadata version', data);
+    }
+  });
+}
+
+
+
 //
 // Update the list of elements in the context object
 //
@@ -215,63 +230,9 @@ function refreshContextElements(selectedIndexIn) {
           console.log('versions', data);
           var versions = data;
 
-          var objects = data;
-          var id;
-
-          for (var i = 0; i < objects.length; ++i) {
-
-            var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
-            $.ajax('/api/getelementsmetadata' + params, {
-              dataType: 'json',
-              type: 'GET',
-              success: function(data) {
-                var object = data;
-
-                $("#elt-select")
-                  .append(
-                  "<option value='" + object.elementId + "'" +
-                  (i == selectedIndexIn ? " selected" : "") + ">" +
-                  _.escape(object.name) + " (" + object.revision + ")" + "</option>"
-                )
-                  .change(function () {
-                    id = $("#elt-select option:selected").val();
-                    theContext.elementId = id;
-
-                    // Restore the UI back to initial create
-                    uiDisplay('off', 'on');
-
-                    var b = document.getElementById("element-generate");
-                    b.style.display = "initial";
-                    b.firstChild.data = "Create";
-                    $('#image-results').empty();
-                    $('#bom-results').empty();
-                  });
-              },
-              error: function(data) {
-                console.log("Error with getMetaData ", data);
-              }
-            });
-
-            // Setup the webhook for model changes
-            var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
-            $.ajax('/api/webhooks' + params, {
-              dataType: 'json',
-              type: 'GET',
-              success: function(data) {
-                console.log('webhooks', data);
-              }
-            });
-          }
-
-
-
-
-
-
-
-
           // Walk-through these and see if we have a match of microversions
           for (var i = 0; i < versions.length; ++i) {
+            getVersionMetaData(versions[i]);
             if (versions[i].microversion == theContext.microversion) {
               theContext.version = versions[i].id;
               break;
@@ -286,57 +247,57 @@ function refreshContextElements(selectedIndexIn) {
             type: 'GET',
             success: function(data) {
               console.log("assemblies", data);
-              // for each assembly tab, create a select option to make that
-              // assembly the current context
-              //$("#elt-select").empty();
+               //for each assembly tab, create a select option to make that
+               //assembly the current context
+              $("#elt-select").empty();
 
-              //var objects = data;
-              //var id;
+              var objects = data;
+              var id;
 
-              //for (var i = 0; i < objects.length; ++i) {
-              //
-              //  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
-              //  $.ajax('/api/getelementsmetadata' + params, {
-              //    dataType: 'json',
-              //    type: 'GET',
-              //    success: function(data) {
-              //      var object = data;
-              //
-              //      $("#elt-select")
-              //        .append(
-              //        "<option value='" + object.elementId + "'" +
-              //        (i == selectedIndexIn ? " selected" : "") + ">" +
-              //        _.escape(object.name) + " (" + object.revision + ")" + "</option>"
-              //      )
-              //        .change(function () {
-              //          id = $("#elt-select option:selected").val();
-              //          theContext.elementId = id;
-              //
-              //          // Restore the UI back to initial create
-              //          uiDisplay('off', 'on');
-              //
-              //          var b = document.getElementById("element-generate");
-              //          b.style.display = "initial";
-              //          b.firstChild.data = "Create";
-              //          $('#image-results').empty();
-              //          $('#bom-results').empty();
-              //        });
-              //    },
-              //    error: function(data) {
-              //      console.log("Error with getMetaData ", data);
-              //    }
-              //  });
-              //
-              //  // Setup the webhook for model changes
-              //  var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
-              //  $.ajax('/api/webhooks' + params, {
-              //    dataType: 'json',
-              //    type: 'GET',
-              //    success: function(data) {
-              //      console.log('webhooks', data);
-              //    }
-              //  });
-              //}
+              for (var i = 0; i < objects.length; ++i) {
+
+                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
+                $.ajax('/api/getelementsmetadata' + params, {
+                  dataType: 'json',
+                  type: 'GET',
+                  success: function(data) {
+                    var object = data;
+
+                    $("#elt-select")
+                      .append(
+                      "<option value='" + object.elementId + "'" +
+                      (i == selectedIndexIn ? " selected" : "") + ">" +
+                      _.escape(object.name) + " (" + object.revision + ")" + "</option>"
+                    )
+                      .change(function () {
+                        id = $("#elt-select option:selected").val();
+                        theContext.elementId = id;
+
+                        // Restore the UI back to initial create
+                        uiDisplay('off', 'on');
+
+                        var b = document.getElementById("element-generate");
+                        b.style.display = "initial";
+                        b.firstChild.data = "Create";
+                        $('#image-results').empty();
+                        $('#bom-results').empty();
+                      });
+                  },
+                  error: function(data) {
+                    console.log("Error with getMetaData ", data);
+                  }
+                });
+
+                // Setup the webhook for model changes
+                var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
+                $.ajax('/api/webhooks' + params, {
+                  dataType: 'json',
+                  type: 'GET',
+                  success: function(data) {
+                    console.log('webhooks', data);
+                  }
+                });
+              }
               theContext.elementId = $("#elt-select option:selected").val();
 
               // If it's empty, then put up a message in the drop-list

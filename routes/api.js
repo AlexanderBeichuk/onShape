@@ -465,7 +465,7 @@ var getVersions = function(req, res) {
   });
 };
 
-var getElementsMetadata = function(req, res) {
+var getElementsMetaData = function(req, res) {
   var url = apiUrl + '/api/elements/d/' + req.query.documentId + '/w/' + req.query.workspaceId + '/e/' + req.query.elementId + '/metadata?';
 
   request.get({
@@ -479,7 +479,31 @@ var getElementsMetadata = function(req, res) {
     console.log('****** getElementsMetadata - CATCH ' + data.statusCode);
     if (data.statusCode === 401) {
       authentication.refreshOAuthToken(req, res).then(function() {
-        getElementsMetadata(req, res);
+        getElementsMetaData(req, res);
+      }).catch(function(err) {
+        console.log('Error refreshing token or getting versions: ', err);
+      });
+    } else {
+      console.log('GET /api/elements/d/ error: ', data);
+    }
+  });
+};
+
+var getVersionMetaData = function(req, res) {
+  var url = apiUrl + '/api/elements/d/' + req.query.documentId + '/v/' + req.query.versionId;
+
+  request.get({
+    uri: url,
+    headers: {
+      'Authorization': 'Bearer ' + req.user.accessToken
+    }
+  }).then(function(data) {
+    res.send(data);
+  }).catch(function(data) {
+    console.log('****** getElementsMetadata - CATCH ' + data.statusCode);
+    if (data.statusCode === 401) {
+      authentication.refreshOAuthToken(req, res).then(function() {
+        getElementsMetaData(req, res);
       }).catch(function(err) {
         console.log('Error refreshing token or getting versions: ', err);
       });
@@ -505,6 +529,7 @@ router.get('/modelchange', checkModelChange);
 router.get('/accounts', getAccounts);
 router.get('/workspace', getWorkspace);
 router.get('/versions', getVersions);
-router.get('/getelementsmetadata', getElementsMetadata);
+router.get('/getelementsmetadata', getElementsMetaData);
+router.get('/getversionmetadata', getVersionMetaData);
 
 module.exports = router;
