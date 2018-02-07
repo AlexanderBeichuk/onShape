@@ -245,6 +245,7 @@ function refreshContextElements(selectedIndexIn) {
                   dataType: 'json',
                   type: 'GET',
                   success: function(data) {
+                    console.log('project', data);
                     var object = data;
 
                     $("#elt-select")
