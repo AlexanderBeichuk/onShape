@@ -466,7 +466,13 @@ var getVersions = function(req, res) {
 };
 
 var getElementsMetaData = function(req, res) {
-  var url = apiUrl + '/api/elements/d/' + req.query.documentId + '/w/' + req.query.workspaceId + '/e/' + req.query.elementId + '/metadata?';
+  var url;
+  if (req.query.workspaceId) {
+    url = apiUrl + '/api/elements/d/' + req.query.documentId + '/w/' + req.query.workspaceId + '/e/' + req.query.elementId + '/metadata?';
+  }
+  if (req.query.versionId) {
+    url = apiUrl + '/api/elements/d/' + req.query.documentId + '/v/' + req.query.versionId + '/e/' + req.query.elementId + '/metadata?';
+  }
 
   request.get({
     uri: url,
