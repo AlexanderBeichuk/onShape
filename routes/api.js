@@ -133,10 +133,10 @@ var getAssemblyList = function(req, res) {
   var url = apiUrl + '/api/documents/d/' + req.query.documentId;
 
   if (req.query.workspaceId) {
-    url += + '/w/' + req.query.workspaceId + '/elements?elementType=assembly';
+    url += '/w/' + req.query.workspaceId + '/elements?elementType=assembly';
   }
   if (req.query.versionId) {
-    url += + '/v/' + req.query.versionId + '/elements?elementType=assembly';
+    url += '/v/' + req.query.versionId + '/elements?elementType=assembly';
   }
 
   if (req.query.elementId) {
