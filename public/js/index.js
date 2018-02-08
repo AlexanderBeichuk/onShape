@@ -231,10 +231,12 @@ function refreshContextElements(selectedIndexIn) {
             var params = "?documentId=" + theContext.documentId + "&versionId=" + versions[i].id;
             $.ajax('/api/assemblies' + params, {
               dataType: 'json',
+              versions: versions,
+              index: i,
               type: 'GET',
-              success: function (data, versions) {
-                versions[i].assemblies = data;
-                console.log("assemblies for ", versions);
+              success: function (data) {
+                this.versions[this.index].assemblies = data;
+                console.log("assemblies for ", this.versions);
               }
             });
           }
