@@ -236,10 +236,15 @@ function refreshContextElements(selectedIndexIn) {
               type: 'GET',
               success: function (data) {
                 this.versions[this.index].assemblies = data;
-                console.log("assemblies for ", this.versions);
+
               }
+
             });
           }
+
+
+          console.log(theContext);
+          console.log(versions);
 
 
 
