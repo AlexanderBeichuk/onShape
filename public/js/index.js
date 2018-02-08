@@ -21,10 +21,8 @@ $(document).ready(function() {
   theContext.documentId = theQuery.documentId;
   theContext.workspaceId = theQuery.workspaceId;
   theContext.elementId = theQuery.elementId;
-  theContext.verison = 0;
+  theContext.version = 0;
   theContext.microversion = 0;
-
-  console.log(theContext);
 
   refreshContextElements(0);
 
@@ -194,7 +192,6 @@ function refreshContextElements(selectedIndexIn) {
     dataType: 'json',
     type: 'GET',
     success: function (data) {
-      console.log("workspace", data);
       var work = data;
       ReadOnly = false;
       theContext.microversion = 0;
@@ -214,7 +211,6 @@ function refreshContextElements(selectedIndexIn) {
         dataType: 'json',
         type: 'GET',
         success: function (data) {
-          console.log('versions', data);
           var versions = data;
 
           // Walk-through these and see if we have a match of microversions
@@ -237,19 +233,12 @@ function refreshContextElements(selectedIndexIn) {
                 this.versions[this.index].assemblies = data;
                 var versionId = this.versions[this.index].id;
                 var versionName = this.versions[this.index].name;
-
-
-
-
-
-
                 // Get all elements for the document ... only send D/W
                 var params = "?documentId=" + theContext.documentId + "&versionId=" + versionId;
                 $.ajax('/api/assemblies'+ params, {
                   dataType: 'json',
                   type: 'GET',
                   success: function(data) {
-                    console.log("assemblies for " + versionId, data);
                     // for each assembly tab, create a select option to make that
                     // assembly the current context
                     //$("#elt-select").empty();
@@ -265,7 +254,6 @@ function refreshContextElements(selectedIndexIn) {
                         type: 'GET',
                         versionName: versionName,
                         success: function(data) {
-                          console.log('project', data);
                           var object = data;
 
                           $("#elt-select")
@@ -299,7 +287,6 @@ function refreshContextElements(selectedIndexIn) {
                         dataType: 'json',
                         type: 'GET',
                         success: function(data) {
-                          console.log('webhooks', data);
                         }
                       });
                     }
@@ -329,108 +316,9 @@ function refreshContextElements(selectedIndexIn) {
                     }
                   }
                 });
-
-
-
-
-
-
-
-
-
-
               }
-
             });
           }
-
-
-          //var dfd = $.Deferred();
-          //// Get all elements for the document ... only send D/W
-          //var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId;
-          //$.ajax('/api/assemblies'+ params, {
-          //  dataType: 'json',
-          //  type: 'GET',
-          //  success: function(data) {
-          //    console.log("assemblies", data);
-          //    // for each assembly tab, create a select option to make that
-          //    // assembly the current context
-          //    $("#elt-select").empty();
-          //
-          //    var objects = data;
-          //    var id;
-          //
-          //    for (var i = 0; i < objects.length; ++i) {
-          //
-          //      var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId  + "&elementId=" + objects[i].id;
-          //      $.ajax('/api/getelementsmetadata' + params, {
-          //        dataType: 'json',
-          //        type: 'GET',
-          //        success: function(data) {
-          //          console.log('project', data);
-          //          var object = data;
-          //
-          //          $("#elt-select")
-          //            .append(
-          //            "<option value='" + object.elementId + "'" +
-          //            (i == selectedIndexIn ? " selected" : "") + ">" +
-          //            _.escape(object.name) + " (" + object.revision + ")" + "</option>"
-          //          )
-          //            .change(function () {
-          //              id = $("#elt-select option:selected").val();
-          //              theContext.elementId = id;
-          //
-          //              // Restore the UI back to initial create
-          //              uiDisplay('off', 'on');
-          //
-          //              var b = document.getElementById("element-generate");
-          //              b.style.display = "initial";
-          //              b.firstChild.data = "Create";
-          //              $('#image-results').empty();
-          //              $('#bom-results').empty();
-          //            });
-          //        },
-          //        error: function(data) {
-          //          console.log("Error with getMetaData ", data);
-          //        }
-          //      });
-          //
-          //      // Setup the webhook for model changes
-          //      var params = "?documentId=" + theContext.documentId + "&workspaceId=" + theContext.workspaceId + "&elementId=" + objects[i].id;
-          //      $.ajax('/api/webhooks' + params, {
-          //        dataType: 'json',
-          //        type: 'GET',
-          //        success: function(data) {
-          //          console.log('webhooks', data);
-          //        }
-          //      });
-          //    }
-          //    theContext.elementId = $("#elt-select option:selected").val();
-          //
-          //    // If it's empty, then put up a message in the drop-list
-          //    if (objects.length == 0) {
-          //      $("#elt-select").append("<option value='" + 0 + "'" + " disabled>* No assemblies in this document *</option>");
-          //      var b = document.getElementById("element-generate");
-          //      b.disabled = true;
-          //    }
-          //    else {
-          //      var b = document.getElementById("element-generate");
-          //      b.disabled = false;
-          //    }
-          //
-          //    checkSubscription();
-          //  },
-          //  error: function(data) {
-          //    $("#elt-select").append("<option value='" + 0 + "'" + " disabled>* Could not access assemblies list in this document *</option>");
-          //    var b = document.getElementById("element-generate");
-          //    b.disabled = true;
-          //
-          //    document.cookie = "TemporaryTestCookie=yes;";
-          //    if(document.cookie.indexOf("TemporaryTestCookie=") == -1) {
-          //      displayAlert('<pre><h4>Cookies for third party sites need to be enabled for this app to run</h4><br>    If you are using Safari, use <b>Preferences</b> -> <b>Privacy</b> then click on <b>Always allow</b><br>    Refresh this page and the BOM Sample will work properly.</pre>');
-          //    }
-          //  }
-          //});
           return dfd.promise();
         }
       });
