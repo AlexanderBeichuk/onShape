@@ -255,7 +255,7 @@ function refreshContextElements(selectedIndexIn) {
                     console.log("assemblies for " + versionId, data);
                     // for each assembly tab, create a select option to make that
                     // assembly the current context
-                    $("#elt-select").empty();
+                    //$("#elt-select").empty();
 
                     var objects = data;
                     var id;
