@@ -236,6 +236,7 @@ function refreshContextElements(selectedIndexIn) {
               success: function (data) {
                 this.versions[this.index].assemblies = data;
                 var versionId = this.versions[this.index].id;
+                var versionName = this.versions[this.index].name;
 
 
 
@@ -262,6 +263,7 @@ function refreshContextElements(selectedIndexIn) {
                       $.ajax('/api/getelementsmetadata' + params, {
                         dataType: 'json',
                         type: 'GET',
+                        versionName: versionName,
                         success: function(data) {
                           console.log('project', data);
                           var object = data;
@@ -270,7 +272,7 @@ function refreshContextElements(selectedIndexIn) {
                             .append(
                             "<option value='" + object.elementId + "'" +
                             (i == selectedIndexIn ? " selected" : "") + ">" +
-                            _.escape(object.name) + " (" + object.revision + ")" + "</option>"
+                            _.escape(object.name) + " - " + this.versionName + " (" + object.revision + ")" + "</option>"
                           )
                             .change(function () {
                               id = $("#elt-select option:selected").val();
