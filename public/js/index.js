@@ -188,9 +188,6 @@ var SubAsmIds = [];
 // Update the list of elements in the context object
 //
 function refreshContextElements(selectedIndexIn) {
-  var allVersions = [];
-
-
   // First, get all of the workspaces ...
   var params = "?documentId=" + theContext.documentId;
   $.ajax('/api/workspace' + params, {
@@ -237,7 +234,6 @@ function refreshContextElements(selectedIndexIn) {
               index: i,
               type: 'GET',
               success: function (data) {
-                this.versions[this.index].assemblies = data;
                 this.versions[this.index].assemblies = data;
                 var versionId = this.versions[this.index].id;
 
@@ -331,7 +327,7 @@ function refreshContextElements(selectedIndexIn) {
                     }
                   }
                 });
-                return dfd.promise();
+
 
 
 
@@ -433,7 +429,7 @@ function refreshContextElements(selectedIndexIn) {
           //    }
           //  }
           //});
-          //return dfd.promise();
+          return dfd.promise();
         }
       });
     },
