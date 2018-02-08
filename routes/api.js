@@ -130,7 +130,15 @@ var getElementList = function(req, res) {
 };
 
 var getAssemblyList = function(req, res) {
-  var url = apiUrl + '/api/documents/d/' + req.query.documentId + '/w/' + req.query.workspaceId + '/elements?elementType=assembly';
+  var url = apiUrl + '/api/documents/d/' + req.query.documentId;
+
+  if (req.query.workspaceId) {
+    url += + '/w/' + req.query.workspaceId + '/elements?elementType=assembly';
+  }
+  if (req.query.versionId) {
+    url += + '/v/' + req.query.versionId + '/elements?elementType=assembly';
+  }
+
   if (req.query.elementId) {
     url += '/?elementId=' + req.query.elementId;
   }

@@ -186,6 +186,9 @@ var SubAsmIds = [];
 // Update the list of elements in the context object
 //
 function refreshContextElements(selectedIndexIn) {
+  var allVersions = [];
+
+
   // First, get all of the workspaces ...
   var params = "?documentId=" + theContext.documentId;
   $.ajax('/api/workspace' + params, {
@@ -222,6 +225,21 @@ function refreshContextElements(selectedIndexIn) {
               break;
             }
           }
+
+
+          for (var i = 0; i < versions.length; ++i) {
+            var params = "?documentId=" + theContext.documentId + "&versionId=" + versions[i].id;
+            $.ajax('/api/assemblies' + params, {
+              dataType: 'json',
+              type: 'GET',
+              success: function (data) {
+                versions[i].assemblies = data;
+                console.log("assemblies for" + versions[i].id, data);
+              }
+            });
+          }
+
+
 
           var dfd = $.Deferred();
           // Get all elements for the document ... only send D/W
