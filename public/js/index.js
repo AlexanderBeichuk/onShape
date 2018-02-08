@@ -234,7 +234,7 @@ function refreshContextElements(selectedIndexIn) {
               type: 'GET',
               success: function (data, versions) {
                 versions[i].assemblies = data;
-                console.log("assemblies for" + versions[i].id, data);
+                console.log("assemblies for ", versions);
               }
             });
           }
