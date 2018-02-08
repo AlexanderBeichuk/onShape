@@ -24,6 +24,8 @@ $(document).ready(function() {
   theContext.verison = 0;
   theContext.microversion = 0;
 
+  console.log(theContext);
+
   refreshContextElements(0);
 
   // Hide the UI elements we don't need right now
@@ -96,7 +98,7 @@ function handlePostMessage(e) {
   } else if (e.data.messageName === 'hide') {
     onHide();
   }
-};
+}
 
 // keep Onshape alive if we have an active user
 var keepaliveCounter = 5 * 60 * 1000;   // 5 minutes
@@ -243,7 +245,7 @@ function refreshContextElements(selectedIndexIn) {
           }
 
 
-          console.log(theContext);
+
           console.log(versions);
 
 
