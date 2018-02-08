@@ -232,7 +232,7 @@ function refreshContextElements(selectedIndexIn) {
             $.ajax('/api/assemblies' + params, {
               dataType: 'json',
               type: 'GET',
-              success: function (data) {
+              success: function (data, versions) {
                 versions[i].assemblies = data;
                 console.log("assemblies for" + versions[i].id, data);
               }
