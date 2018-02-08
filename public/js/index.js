@@ -225,7 +225,7 @@ function refreshContextElements(selectedIndexIn) {
             }
           }
 
-
+          var dfd = $.Deferred();
           for (var i = 0; i < versions.length; ++i) {
             var params = "?documentId=" + theContext.documentId + "&versionId=" + versions[i].id;
             $.ajax('/api/assemblies' + params, {
@@ -242,7 +242,7 @@ function refreshContextElements(selectedIndexIn) {
 
 
 
-                var dfd = $.Deferred();
+
                 // Get all elements for the document ... only send D/W
                 var params = "?documentId=" + theContext.documentId + "&versionId=" + versionId;
                 $.ajax('/api/assemblies'+ params, {
